@@ -21,16 +21,12 @@ function Gameboard(){
         return;
     }
 
-    const checkWin = () => {
-        const winnerCoordinates = []
-    }
-
     const printBoard = () =>{
         const boardValues = board.map((row) => row.map((cell) => cell.getValue()));
         console.log(boardValues);
     }
         
-    return {getBoard, markBoard, checkWin, printBoard};
+    return {getBoard, markBoard, printBoard};
 }
 
 function Square(){
@@ -94,21 +90,48 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         console.log(`${getActivePlayer()}'s turn`)
     }
 
+    const checkWin = (row, col) => {
+        if (board.getBoard()[row][0].getValue() === board.getBoard()[row][1].getValue()
+            && board.getBoard()[row][1].getValue() === board.getBoard()[row][2].getValue()){
+        return true;
+    }
+    if (board.getBoard()[0][col].getValue() === board.getBoard()[1][col].getValue()
+    && board.getBoard()[1][col].getValue() === board.getBoard()[2][col].getValue()){
+        return true;
+    }      
+    return false; 
+    }
+
+    const checkDraw = () => {
+        for (let i = 0; i < board.rows; i++){
+            console.log('hi');
+        }
+    }
 
     const makeMove = (row, col) => {
         let cell = board.getBoard()[row][col];
         if (cell.getValue() === ' '){
             board.markBoard(row, col, activePlayer.getMarker());
+            if (checkWin(row, col)){
+                console.log(`${getActivePlayer()} wins!`);
+                board.printBoard();
+                return;
+            }
+            checkDraw();
             switchTurn();
+            printNewRound();
         }
-
-
     }
 
     return {getPlayers, switchTurn, getActivePlayer, printNewRound, makeMove};
 }
 
 
-let game = Gameboard();
-game.markBoard(1, 0, "X");
-game.printBoard();
+let gameController = GameController();
+gameController.printNewRound();
+gameController.makeMove(1,1);
+gameController.makeMove(1,2);
+gameController.makeMove(0,0);
+gameController.makeMove(0, 2);
+gameController.makeMove(2,1);
+gameController.makeMove(2,2);
