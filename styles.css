@@ -9,8 +9,9 @@
     --o-color: #f2ebd3;
 }
 
-.player-header{
+#player-header{
     font-size: 3em;
+    text-align: center;
 }
 
 
@@ -33,10 +34,13 @@ body{
 .square{
     border: 3px solid var(--border-color);
     display: flex;
-    padding: 40px;
+    padding: 50px;
     justify-content: center;
     align-items: center;
     font-size: 7em;
+    width: 30px;
+    height: 30px;
+    background-color: #5BCEFA;
     overflow: hidden;
     border-radius: 20px;
     margin: 5px;

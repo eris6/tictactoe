@@ -141,13 +141,47 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
             printNewRound();
         }
     }
-    return {getPlayers, switchTurn, getActivePlayer, printNewRound, makeMove};
+    return {getPlayers, switchTurn, getActivePlayer, printNewRound, makeMove, getBoard: board.getBoard};
 }
 
 function ScreenDisplay(){
     const game = GameController();
+    const playerTurn = document.querySelector('#player-header');
     const boardDiv = document.querySelector('#board');
+
+    const updateTurn = () => {
+        playerTurn.textContent = "";
+        let activePlayer = game.getActivePlayer();
+        playerTurn.textContent = `${activePlayer}'s Turn!`;
+        console.log(activePlayer);
+
+    }
+
+
+    const updateScreen = () => {
+        
+        boardDiv.textContent = "";  
+        const board = game.getBoard();
+        updateTurn();
+
+        board.forEach((row, rowIndex) => {
+            row.forEach((cell, colIndex) => {
+                const cellButton = document.createElement("div");
+                cellButton.classList.add("square");
+                boardDiv.appendChild(cellButton);
+
+                cellButton.addEventListener('click', () =>{
+                    game.makeMove(rowIndex, colIndex);
+                    updateTurn();
+                    cellButton.textContent = cell.getValue();
+                })
+            })
+        })
+        
+    };
+    updateScreen();
+
 }
 
 
-let gameController = GameController();
+ScreenDisplay();
