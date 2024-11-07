@@ -212,6 +212,12 @@ function ScreenDisplay(){
                     }
                     if (game.checkWin()){
                         let activePlayer = game.getActivePlayer();
+                        if (cell.getValue() === "O"){
+                            playerTurn.style.color="#f2ebd3";
+                        }
+                        else{
+                            playerTurn.style.color="#545454";
+                        }
                         playerTurn.textContent = `${activePlayer} Wins!`;
                     }
                 })

@@ -66,3 +66,6 @@ body{
     cursor: pointer;
 }
 
+.filter-gray{
+    filter: invert(29%) sepia(0%) saturate(2417%) hue-rotate(143deg) brightness(81%) contrast(65%);
+}
