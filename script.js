@@ -141,7 +141,8 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
             printNewRound();
         }
     }
-    return {getPlayers, switchTurn, getActivePlayer, printNewRound, makeMove, getBoard: board.getBoard};
+
+    return {getPlayers, switchTurn, checkDraw, getActivePlayer, printNewRound, makeMove, getBoard: board.getBoard};
 }
 
 function ScreenDisplay(){
@@ -152,8 +153,15 @@ function ScreenDisplay(){
     const updateTurn = () => {
         playerTurn.textContent = "";
         let activePlayer = game.getActivePlayer();
-        playerTurn.textContent = `${activePlayer}'s Turn!`;
-        console.log(activePlayer);
+        
+        if (game.checkDraw()){
+            playerTurn.textContent = `No winner! It's a draw!`;
+        }
+        else{
+            playerTurn.textContent = `${activePlayer}'s Turn!`;
+            console.log(activePlayer);    
+        }
+
 
     }
 
@@ -185,3 +193,4 @@ function ScreenDisplay(){
 
 
 ScreenDisplay();
+
