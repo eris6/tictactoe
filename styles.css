@@ -34,7 +34,7 @@ body{
 .square{
     border: 3px solid var(--border-color);
     display: flex;
-    padding: 50px;
+    padding: 40px;
     justify-content: center;
     align-items: center;
     font-size: 7em;
@@ -44,7 +44,6 @@ body{
     overflow: hidden;
     border-radius: 20px;
     margin: 5px;
-
 }
 
 
@@ -52,4 +51,9 @@ body{
     cursor: crosshair;
     background-color: var(--border-color);
 
+}
+
+
+#reset:hover{
+    cursor: pointer;
 }

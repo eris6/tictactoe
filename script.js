@@ -182,9 +182,8 @@ function ScreenDisplay(){
 
 
     const updateScreen = () => {
-        
         boardDiv.textContent = "";  
-        const board = game.getBoard();
+        let board = game.getBoard();
         updateTurn();
 
         board.forEach((row, rowIndex) => {
@@ -207,11 +206,18 @@ function ScreenDisplay(){
                 })
             })
         })
-        
     };
     updateScreen();
 
+   
+
 }
+
+
+const reset = document.querySelector("#reset");
+reset.addEventListener('click', () =>{
+  ScreenDisplay();      
+})
 
 
 ScreenDisplay();
