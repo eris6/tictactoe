@@ -90,16 +90,33 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         console.log(`${getActivePlayer()}'s turn`)
     }
 
-    const checkWin = (row, col) => {
+    const checkWin = () => {
 
-    if (board.getBoard()[row][0].getValue() !== ' ' && board.getBoard()[row][0].getValue() === board.getBoard()[row][1].getValue()
-            && board.getBoard()[row][1].getValue() === board.getBoard()[row][2].getValue()){
+    if (board.getBoard()[0][0].getValue() !== ' ' && board.getBoard()[0][0].getValue() === board.getBoard()[0][1].getValue()
+            && board.getBoard()[0][1].getValue() === board.getBoard()[0][2].getValue()){
         return true;
     }
-    if (board.getBoard()[0][col].getValue() !== ' ' && board.getBoard()[0][col].getValue() === board.getBoard()[1][col].getValue()
-    && board.getBoard()[1][col].getValue() === board.getBoard()[2][col].getValue()){
+    if (board.getBoard()[1][0].getValue() !== ' ' && board.getBoard()[1][0].getValue() === board.getBoard()[1][1].getValue()
+        && board.getBoard()[1][1].getValue() === board.getBoard()[1][2].getValue()){
+    return true;
+    }
+    if (board.getBoard()[2][0].getValue() !== ' ' && board.getBoard()[2][0].getValue() === board.getBoard()[2][1].getValue()
+        && board.getBoard()[2][1].getValue() === board.getBoard()[2][2].getValue()){
+    return true;
+    }   
+
+    if (board.getBoard()[0][0].getValue() !== ' ' && board.getBoard()[0][0].getValue() === board.getBoard()[1][0].getValue()
+    && board.getBoard()[1][0].getValue() === board.getBoard()[2][0].getValue()){
         return true;
     }
+    if (board.getBoard()[0][1].getValue() !== ' ' && board.getBoard()[0][1].getValue() === board.getBoard()[1][1].getValue()
+        && board.getBoard()[1][1].getValue() === board.getBoard()[2][1].getValue()){
+            return true;
+    }
+    if (board.getBoard()[0][2].getValue() !== ' ' && board.getBoard()[0][2].getValue() === board.getBoard()[1][2].getValue()
+        && board.getBoard()[1][2].getValue() === board.getBoard()[2][2].getValue()){
+            return true;
+        }
     if (board.getBoard()[0][0].getValue() !== ' ' && board.getBoard()[0][0].getValue() === board.getBoard()[1][1].getValue()
         && board.getBoard()[1][1].getValue() === board.getBoard()[2][2].getValue()){
             return true;
@@ -127,7 +144,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         let cell = board.getBoard()[row][col];
         if (cell.getValue() === ' '){
             board.markBoard(row, col, activePlayer.getMarker());
-            if (checkWin(row, col)){
+            if (checkWin()){
                 console.log(`${getActivePlayer()} wins!`);
                 board.printBoard();
                 return;
@@ -142,7 +159,7 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         }
     }
 
-    return {getPlayers, switchTurn, checkDraw, getActivePlayer, printNewRound, makeMove, getBoard: board.getBoard};
+    return {getPlayers, switchTurn, checkWin, checkDraw, getActivePlayer, printNewRound, makeMove, getBoard: board.getBoard};
 }
 
 function ScreenDisplay(){
@@ -153,7 +170,7 @@ function ScreenDisplay(){
     const updateTurn = () => {
         playerTurn.textContent = "";
         let activePlayer = game.getActivePlayer();
-        
+
         if (game.checkDraw()){
             playerTurn.textContent = `No winner! It's a draw!`;
         }
@@ -161,8 +178,6 @@ function ScreenDisplay(){
             playerTurn.textContent = `${activePlayer}'s Turn!`;
             console.log(activePlayer);    
         }
-
-
     }
 
 
@@ -179,9 +194,16 @@ function ScreenDisplay(){
                 boardDiv.appendChild(cellButton);
 
                 cellButton.addEventListener('click', () =>{
-                    game.makeMove(rowIndex, colIndex);
+                    if (!game.checkWin()){
+                        game.makeMove(rowIndex, colIndex);
+                    }
+
                     updateTurn();
                     cellButton.textContent = cell.getValue();
+                    if (game.checkWin()){
+                        let activePlayer = game.getActivePlayer();
+                        playerTurn.textContent = `${activePlayer} Wins!`;
+                    }
                 })
             })
         })
