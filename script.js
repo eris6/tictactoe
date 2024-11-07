@@ -58,7 +58,7 @@ function Player(){
     return {getPlayerName, getMarker, setPlayerName, setMarker};
 }
 
-function GameController(playerOneName = "Player One", playerTwoName = "Player Two"){
+function GameController(playerOneName = "X", playerTwoName = "O"){
     let playerOne = Player();
     playerOne.setMarker('X');
     playerOne.setPlayerName(playerOneName);
@@ -166,6 +166,8 @@ function ScreenDisplay(){
     const game = GameController();
     const playerTurn = document.querySelector('#player-header');
     const boardDiv = document.querySelector('#board');
+    playerTurn.style.color="#545454";
+
 
     const updateTurn = () => {
         playerTurn.textContent = "";
@@ -199,6 +201,15 @@ function ScreenDisplay(){
 
                     updateTurn();
                     cellButton.textContent = cell.getValue();
+
+                    if (cell.getValue() === "O"){
+                        cellButton.style.color="#f2ebd3";
+                        playerTurn.style.color="#545454";
+                    }
+                    else{
+                        cellButton.style.color="#545454";
+                        playerTurn.style.color="#f2ebd3";
+                    }
                     if (game.checkWin()){
                         let activePlayer = game.getActivePlayer();
                         playerTurn.textContent = `${activePlayer} Wins!`;
@@ -207,10 +218,7 @@ function ScreenDisplay(){
             })
         })
     };
-    updateScreen();
-
-   
-
+    updateScreen();   
 }
 
 
@@ -218,6 +226,7 @@ const reset = document.querySelector("#reset");
 reset.addEventListener('click', () =>{
   ScreenDisplay();      
 })
+
 
 
 ScreenDisplay();

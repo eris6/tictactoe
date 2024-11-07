@@ -14,6 +14,14 @@
     text-align: center;
 }
 
+.player-names > button{
+    background-color: var(--screen-background);
+}
+
+.player-names > button:hover{
+    background-color: var(--border-color);
+    cursor: pointer;
+}
 
 body{
     display: flex;
@@ -57,3 +65,4 @@ body{
 #reset:hover{
     cursor: pointer;
 }
+
