@@ -1,1 +1,51 @@
+*{
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
 
+:root{
+    --screen-background: #12bdac;
+    --border-color: #0ca192;
+    --x-color: #545454;
+    --o-color: #f2ebd3;
+}
+
+.player-header{
+    font-size: 3em;
+}
+
+
+body{
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--screen-background);
+}
+
+#board{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.square{
+    border: 3px solid var(--border-color);
+    display: flex;
+    padding: 40px;
+    justify-content: center;
+    align-items: center;
+    font-size: 7em;
+    overflow: hidden;
+    border-radius: 20px;
+    margin: 5px;
+
+}
+
+
+.square:hover{
+    cursor: crosshair;
+    background-color: var(--border-color);
+
+}

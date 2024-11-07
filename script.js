@@ -91,21 +91,36 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
     }
 
     const checkWin = (row, col) => {
-        if (board.getBoard()[row][0].getValue() === board.getBoard()[row][1].getValue()
+
+    if (board.getBoard()[row][0].getValue() !== ' ' && board.getBoard()[row][0].getValue() === board.getBoard()[row][1].getValue()
             && board.getBoard()[row][1].getValue() === board.getBoard()[row][2].getValue()){
         return true;
     }
-    if (board.getBoard()[0][col].getValue() === board.getBoard()[1][col].getValue()
+    if (board.getBoard()[0][col].getValue() !== ' ' && board.getBoard()[0][col].getValue() === board.getBoard()[1][col].getValue()
     && board.getBoard()[1][col].getValue() === board.getBoard()[2][col].getValue()){
         return true;
-    }      
+    }
+    if (board.getBoard()[0][0].getValue() !== ' ' && board.getBoard()[0][0].getValue() === board.getBoard()[1][1].getValue()
+        && board.getBoard()[1][1].getValue() === board.getBoard()[2][2].getValue()){
+            return true;
+    }
+    if (board.getBoard()[0][2].getValue() !== ' ' && board.getBoard()[0][2].getValue() === board.getBoard()[1][1].getValue()
+        && board.getBoard()[1][1].getValue() === board.getBoard()[2][0].getValue()){
+            return true;
+    }           
     return false; 
     }
 
     const checkDraw = () => {
-        for (let i = 0; i < board.rows; i++){
-            console.log('hi');
+        let cellCount = 0;
+        for (let i = 0; i < board.getBoard().length; i++){
+            for (let j = 0; j < board.getBoard()[i].length; j++){
+                if (board.getBoard()[i][j].getValue() !== ' '){
+                    cellCount++;
+                }
+            }
         }
+        return (cellCount == 9);
     }
 
     const makeMove = (row, col) => {
@@ -117,21 +132,22 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
                 board.printBoard();
                 return;
             }
-            checkDraw();
+            if (checkDraw()){
+                console.log("No winner! It's a draw!")
+                board.printBoard();
+                return;
+            }
             switchTurn();
             printNewRound();
         }
     }
-
     return {getPlayers, switchTurn, getActivePlayer, printNewRound, makeMove};
+}
+
+function ScreenDisplay(){
+    const game = GameController();
+    const boardDiv = document.querySelector('#board');
 }
 
 
 let gameController = GameController();
-gameController.printNewRound();
-gameController.makeMove(1,1);
-gameController.makeMove(1,2);
-gameController.makeMove(0,0);
-gameController.makeMove(0, 2);
-gameController.makeMove(2,1);
-gameController.makeMove(2,2);
